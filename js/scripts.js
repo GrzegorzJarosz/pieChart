@@ -5,35 +5,55 @@ let inpSb= document.querySelector('#setForm input[type="submit"]');
 
 let dataCont= document.querySelector('.all-data');
 
-/*------------------------*/
+/*----------------------------------------------------------------*/
 
+//arr fo storing data:
 let pieData=[];
 
-let Sector= function(val, descr, col,  path){
-	this.val=val;
-	this.color=col;
-	this.descr=descr;
-	this.pathStr=path;
+//create svg pie-chart-container
+function drawPieCont(){
+	const content=document.getElementById('piechart');
+	content.innerHTML='';
+	let svg= document.createElementNS('http://www.w3.org/2000/svg','svg');
+	svg.setAttribute('width', 200);
+	svg.setAttribute('height', 200);
+	svg.setAttribute('id', 'svgPie');
+	svg.setAttribute('viewbox','0 0 200 200');
+
+	content.appendChild(svg);
 };
 
-/*------------*/
+//draw all chart
+function drawAll(){
+	drawPieCont();
+};
 
+//constr sectorObj
+function Sector(val, descr){
+	this.val=val;
+	this.descr=descr;
+};
+
+
+//sector obj creator
 let createSector= function(){
 	let c='abc';
-	let p='cba';
-	let a=new Sector(inpVl.value, inpDescr.value, c, p);
+	let a=new Sector(inpVl.value, inpDescr.value);
 	pieData.push(a);
-	console.log(pieData);
+	console.log(pieData); // test
 };
 
-/*------------*/
 
+//add data from form
 inpSb.addEventListener('click',(e)=>{
 	e.preventDefault();
-	if(inpVl.checkValidity() && inpDescr.checkValidity()){
-		createSector();
-		setForm.reset();
+	if(inpVl.checkValidity() && inpDescr.checkValidity()){  //valid
+		createSector();//push new data obj into arr
+		setForm.reset();//reset form after submit
+
+		drawAll();
+
 	}else{return false};
 });
 
-/*--------------------------------------------------------------------*/
+/*----------------------------------------------------------------*/
