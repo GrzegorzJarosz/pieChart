@@ -22,11 +22,58 @@ function drawPieCont(){
 
 	content.appendChild(svg);
 };
+/*----------------------------------------------------------------*/
 
+//get sum of all values in data array
+function getSum(){
+	return pieData.map(function(a){return +a.val;}).reduce(function(tot,curr){return tot+curr;});
+
+	//return pieData.reduce(function(total,item){return total+(+item.val);},0);
+};
+
+/*----------------------------------------------------------------*/
 //draw all chart
 function drawAll(){
 	drawPieCont();
+
+	let x=100;
+	let y= 0;
+	let val=0;
+	let arrLen=pieData.length;
+
+	for(let i=0; i<arrLen; i++){
+
+		let count=arrLen-(i+1);// direction => last data as first
+
+		let dir;
+
+		val0=pieData[count].val*1;
+		let ang0=((val0/getSum())*360);
+		if(ang0>180){dir=1}else{dir=0}
+
+		val+=pieData[count].val*1;
+		let ang=((val/getSum())*360);
+
+		let cc= (ang*(Math.PI/180))-Math.PI/2;
+
+		let prex=100+((Math.cos(cc)) * 100);
+		let x2=Math.floor(prex*100)/100;
+		let y2=100+((Math.sin(cc)) * 100);
+
+		let path= document.createElementNS('http://www.w3.org/2000/svg','path');
+		let svgPath=document.querySelector('#piechart svg');
+		svgPath.appendChild(path);
+
+		let d1=`M100 100 L ${x} ${y}  A100 100 0, ${dir} ,1 ${x2} ${y2} Z`;
+		path.setAttribute('d', d1);
+		let col=`#${i}a3${i}${i}0`;
+		path.setAttribute('fill', col);
+
+		x=x2;
+		y=y2;
+	};
 };
+/*----------------------------------------------------------------*/
 
 //constr sectorObj
 function Sector(val, descr){
@@ -52,7 +99,7 @@ inpSb.addEventListener('click',(e)=>{
 		setForm.reset();//reset form after submit
 
 		drawAll();
-
+		console.log(getSum());
 	}else{return false};
 });
 
