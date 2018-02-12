@@ -26,26 +26,37 @@ function drawPieCont(){
 
 //get sum of all values in data array
 function getSum(){
-	return pieData.map(function(a){return +a.val;}).reduce(function(tot,curr){return tot+curr;});
-
-	//return pieData.reduce(function(total,item){return total+(+item.val);},0);
+	//return pieData.map(function(a){return +a.val;}).reduce(function(tot,curr){return tot+curr;});
+	return pieData.reduce(function(total,item){return total+(+item.val);},0);
 };
 
 /*----------------------------------------------------------------*/
-//draw all chart
-function drawAll(){
-	drawPieCont();
+function colorMaker(num, sum){
+	let w=5;
+	let q=10;
+	if(num%2===0){w=2}
+	if(num%3===0){w=3}
+	if(num%4===0){q=8}
+	let col='hsl('+num*(360/sum)+', '+q*10+'%, '+w*10+'%)';
+	return col;
+};
+/*----------------------------------------------------------------*/
 
+//---draw all -- chart---
+function drawAll(){
+
+	drawPieCont();
+	//init values
 	let x=100;
 	let y= 0;
 	let val=0;
+
 	let arrLen=pieData.length;
 
 	for(let i=0; i<arrLen; i++){
 
 		let count=arrLen-(i+1);// direction => last data as first
-
-		let dir;
+		let dir;//svg var
 
 		val0=pieData[count].val*1;
 		let ang0=((val0/getSum())*360);
@@ -66,7 +77,8 @@ function drawAll(){
 
 		let d1=`M100 100 L ${x} ${y}  A100 100 0, ${dir} ,1 ${x2} ${y2} Z`;
 		path.setAttribute('d', d1);
-		let col=`#${i}a3${i}${i}0`;
+		//let col=`#${i}a3${i}${i}0`;
+		let col=colorMaker(i, arrLen);
 		path.setAttribute('fill', col);
 
 		x=x2;
@@ -87,11 +99,11 @@ let createSector= function(){
 	let c='abc';
 	let a=new Sector(inpVl.value, inpDescr.value);
 	pieData.push(a);
-	console.log(pieData); // test
+	console.log(pieData); // ******test*******
 };
 
 
-//add data from form
+//get data from form into arr
 inpSb.addEventListener('click',(e)=>{
 	e.preventDefault();
 	if(inpVl.checkValidity() && inpDescr.checkValidity()){  //valid
@@ -99,7 +111,7 @@ inpSb.addEventListener('click',(e)=>{
 		setForm.reset();//reset form after submit
 
 		drawAll();
-		console.log(getSum());
+		console.log(getSum()); // ******test*******
 	}else{return false};
 });
 
