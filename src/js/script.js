@@ -2,8 +2,8 @@ let setForm=document.querySelector('#setForm');
 let inpVl= document.querySelector('#setForm #secVal');
 let inpDescr= document.querySelector('#setForm #secDescr');
 let inpSb= document.querySelector('#setForm input[type="submit"]');
+let keyChartCont=document.querySelector('#key');
 
-let dataCont= document.querySelector('.all-data');
 
 /*----------------------------------------------------------------*/
 
@@ -26,13 +26,12 @@ function drawPieCont(){
 
 //get sum of all values in data array
 function getSum(){
-	//return pieData.map(function(a){return +a.val;}).reduce(function(tot,curr){return tot+curr;});
 	return pieData.reduce(function(total,item){return total+(+item.val);},0);
 };
 
 /*----------------------------------------------------------------*/
 function colorMaker(num, sum){
-	let w=5;
+	let w=4;
 	let q=10;
 	if(num%2===0){w=2}
 	if(num%3===0){w=3}
@@ -42,10 +41,45 @@ function colorMaker(num, sum){
 };
 /*----------------------------------------------------------------*/
 
+function keyChartGen(col, val, descr){
+	//
+
+	let color=col;
+	let value=val;
+	let description=descr;
+
+	//sub-cont
+	let k=document.createElement('div')
+	k.setAttribute('class','key-sub');
+
+	//colorblock
+	let sc=document.createElement('div')
+	sc.setAttribute('class','key-sub-col');
+	sc.setAttribute('style','background-color:'+color);
+	let txtval = document.createTextNode(value);
+	sc.appendChild(txtval);
+
+	//textblock
+	let st=document.createElement('span')
+	st.setAttribute('class','key-sub-txt');
+	//text for textblock
+	let txt = document.createTextNode(description);
+	st.appendChild(txt);
+
+	//
+	k.appendChild(sc);
+	k.appendChild(st);
+	keyChartCont.appendChild(k);
+	//
+};
+
+/*----------------------------------------------------------------*/
+
 //---draw all -- chart---
 function drawAll(){
 
 	drawPieCont();
+	keyChartCont.innerHTML='';
 	//init values
 	let x=100;
 	let y= 0;
@@ -81,6 +115,8 @@ function drawAll(){
 		let col=colorMaker(i, arrLen);
 		path.setAttribute('fill', col);
 
+		//keyChartGen
+		keyChartGen(col, pieData[count].val, pieData[count].descr)
 		x=x2;
 		y=y2;
 	};
