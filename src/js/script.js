@@ -10,6 +10,30 @@ let keyChartCont=document.querySelector('#key');
 //arr fo storing data:
 let pieData=[];
 
+//constr sectorObj
+function Sector(val, descr){
+	this.val=val;
+	this.descr=descr;
+};
+
+/*----------------------------------------------------------------*/
+
+//sector obj creator
+let createSector= function(){
+	let c='abc';
+	let a=new Sector(inpVl.value, inpDescr.value);
+	pieData.push(a);
+	console.log(pieData); // ******test*******
+};
+
+/*----------------------------------------------------------------*/
+//get sum of all values in data array
+function getSum(){
+	return pieData.reduce(function(total,item){return total+(+item.val);},0);
+};
+
+/*----------------------------------------------------------------*/
+
 //create svg pie-chart-container
 function drawPieCont(){
 	const content=document.getElementById('piechart');
@@ -23,13 +47,7 @@ function drawPieCont(){
 	content.appendChild(svg);
 };
 /*----------------------------------------------------------------*/
-
-//get sum of all values in data array
-function getSum(){
-	return pieData.reduce(function(total,item){return total+(+item.val);},0);
-};
-
-/*----------------------------------------------------------------*/
+//color generator
 function colorMaker(num, sum){
 	let w=4;
 	let q=10;
@@ -40,9 +58,8 @@ function colorMaker(num, sum){
 	return col;
 };
 /*----------------------------------------------------------------*/
-
+//keyChart generator
 function keyChartGen(col, val, descr){
-	//
 
 	let color=col;
 	let value=val;
@@ -56,13 +73,14 @@ function keyChartGen(col, val, descr){
 	let sc=document.createElement('div')
 	sc.setAttribute('class','key-sub-col');
 	sc.setAttribute('style','background-color:'+color);
+	//addtext
 	let txtval = document.createTextNode(value);
 	sc.appendChild(txtval);
 
 	//textblock
 	let st=document.createElement('span')
 	st.setAttribute('class','key-sub-txt');
-	//text for textblock
+	//addtext
 	let txt = document.createTextNode(description);
 	st.appendChild(txt);
 
@@ -70,7 +88,6 @@ function keyChartGen(col, val, descr){
 	k.appendChild(sc);
 	k.appendChild(st);
 	keyChartCont.appendChild(k);
-	//
 };
 
 /*----------------------------------------------------------------*/
@@ -111,32 +128,16 @@ function drawAll(){
 
 		let d1=`M100 100 L ${x} ${y}  A100 100 0, ${dir} ,1 ${x2} ${y2} Z`;
 		path.setAttribute('d', d1);
-		//let col=`#${i}a3${i}${i}0`;
+
 		let col=colorMaker(i, arrLen);
 		path.setAttribute('fill', col);
-
-		//keyChartGen
 		keyChartGen(col, pieData[count].val, pieData[count].descr)
+
 		x=x2;
 		y=y2;
 	};
 };
 /*----------------------------------------------------------------*/
-
-//constr sectorObj
-function Sector(val, descr){
-	this.val=val;
-	this.descr=descr;
-};
-
-
-//sector obj creator
-let createSector= function(){
-	let c='abc';
-	let a=new Sector(inpVl.value, inpDescr.value);
-	pieData.push(a);
-	console.log(pieData); // ******test*******
-};
 
 
 //get data from form into arr
@@ -150,5 +151,3 @@ inpSb.addEventListener('click',(e)=>{
 		console.log(getSum()); // ******test*******
 	}else{return false};
 });
-
-/*----------------------------------------------------------------*/
