@@ -8,7 +8,17 @@ let keyChartCont=document.querySelector('#key');
 /*----------------------------------------------------------------*/
 
 //arr fo storing data:
-let pieData=[];
+let pieData=[
+	{val:102,descr:'buraki'},
+	{val:33,descr:'orzechy'},
+	{val:81,descr:'pietruszka'},
+	{val:62,descr:'salata'},
+	{val:21,descr:'kalafior'},
+	{val:99,descr:'rzodkiewka'},
+	{val:34,descr:'fasola'},
+	{val:345,descr:'brokul'},
+	{val:234,descr:'ziemniaki'}
+];
 
 //constr sectorObj
 function Sector(val, descr){
@@ -23,7 +33,8 @@ let createSector= function(){
 	let c='abc';
 	let a=new Sector(inpVl.value, inpDescr.value);
 	pieData.push(a);
-	console.log(pieData); // ******test*******
+	//test
+	//console.log(pieData);
 };
 
 /*----------------------------------------------------------------*/
@@ -148,6 +159,10 @@ inpSb.addEventListener('click',(e)=>{
 		setForm.reset();//reset form after submit
 
 		drawAll();
-		console.log(getSum()); // ******test*******
+		//test
+		//console.log(getSum());
 	}else{return false};
 });
+
+
+drawAll();
