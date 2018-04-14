@@ -1,14 +1,14 @@
-
 @import 'colors';
 
 body {
 	font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
 	background-color: $bcgr-main;
 	font-size:12px;
-	color:#f2f2f2;
+	color:$col-main;
 }
 .col-sec{
 	padding:10px;
+	display: flex;
 }
 
 #chart-sect{
@@ -16,31 +16,35 @@ body {
 	justify-content:center;
 }
 
-#piechart{
-	width:200px;
-	height:200px;
-}
-
-
 #key{
 	margin-top: 10px;
-	border:1px solid $col-bord;
-	border-radius: 7px;
 	min-width: 60px;
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
 	.key-sub{
 		display:flex;
+		align-items: center;
 		.key-sub-col{
-			margin: 2px 5px;
-			padding:2px 10px;
+			margin: 0px 5px;
+			padding: 5px 8px;
 		}
 		.key-sub-txt{
-			font-size:10px;
-			padding:5px;
+			font-size: 10px;
+			padding: 5px;
 		}
 	}
 }
 
 #form-cont{
+	display: flex;
+	justify-content:center;
+	text-align: center;
+	.sub-form-cont{
+		border: 1px solid $col-bord;
+		border-radius: 8px;
+		padding:20px;
+	}
 	#setForm {
 		margin-top: 10px;
 		display: flex;
