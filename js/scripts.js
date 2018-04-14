@@ -88,15 +88,12 @@ function keyChartGen(col, val, descr){
 	let sc = document.createElement('div')
 	sc.setAttribute('class','key-sub-col');
 	sc.setAttribute('style','background-color:'+color);
-	//addtext
-	let txtval = document.createTextNode(value);
-	sc.appendChild(txtval);
 
 	//textblock
 	let st = document.createElement('span')
 	st.setAttribute('class','key-sub-txt');
 	//addtext
-	let txt = document.createTextNode(description);
+	let txt = document.createTextNode(description+', '+value);
 	st.appendChild(txt);
 
 	//
@@ -113,7 +110,6 @@ function drawAll(){
 	drawPieCont();
 	keyChartCont.innerHTML = '';
 	//init values
-	//-------------------??---------------------------> let x = 100;
 	let halfH = pieHeight/2;
 	let x = halfH;
 	let y = 0;
