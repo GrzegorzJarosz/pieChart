@@ -25,6 +25,7 @@ body {
 	.key-sub{
 		display:flex;
 		align-items: center;
+		color:$col-key-gray;
 		.key-sub-col{
 			margin: 0px 5px;
 			padding: 5px 8px;
@@ -71,4 +72,19 @@ body {
 			}
 		}
 	}
+}
+
+
+
+/*----------*/
+
+#svgPie{
+	path{
+		transition:all 0.3s ease-in-out ;
+	}
+}
+.key-marked{
+	transition:all 0.3s ease-in-out ;
+	color:$col-main !important;
+	transform:translate(-1px,0px);
 }

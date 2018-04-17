@@ -20,7 +20,8 @@ body {
   justify-content: center; }
   #key .key-sub {
     display: flex;
-    align-items: center; }
+    align-items: center;
+    color: #666; }
     #key .key-sub .key-sub-col {
       margin: 0px 5px;
       padding: 5px 8px; }
@@ -57,3 +58,12 @@ body {
       transition: all 0.15s ease-in-out; }
       #form-cont #setForm input[type=submit]:hover {
         background-color: #555; }
+
+/*----------*/
+#svgPie path {
+  transition: all 0.3s ease-in-out; }
+
+.key-marked {
+  transition: all 0.3s ease-in-out;
+  color: #f2f2f2 !important;
+  transform: translate(-1px, 0px); }

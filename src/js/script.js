@@ -74,7 +74,7 @@ function colorMaker(num, sum){
 };
 /*----------------------------------------------------------------*/
 //keyChart generator
-function keyChartGen(col, val, descr){
+function keyChartGen(col, val, descr, no){
 
 	let color = col;
 	let value = val;
@@ -83,6 +83,7 @@ function keyChartGen(col, val, descr){
 	//sub-cont
 	let k = document.createElement('div')
 	k.setAttribute('class','key-sub');
+	k.setAttribute('data-id', no);
 
 	//colorblock
 	let sc = document.createElement('div')
@@ -110,10 +111,12 @@ function drawAll(){
 	drawPieCont();
 	keyChartCont.innerHTML = '';
 	//init values
-	let halfH = pieHeight/2;
-	let x = halfH;
+	let halfH = (pieHeight / 2) -5;
+	let x = halfH ;
 	let y = 0;
 	let val = 0;
+	let totalAng = 0;
+	partId = 0;
 
 
 	let arrLen = pieData.length;
@@ -140,15 +143,37 @@ function drawAll(){
 		let svgPath = document.querySelector('#piechart svg');
 		svgPath.appendChild(path);
 
-		let d1 =`M${pieHeight/2} ${pieHeight/2} L ${x} ${y}  A${pieHeight/2} ${pieHeight/2} 0, ${dir} ,1 ${x2} ${y2} Z`;
+		let d1 =`M${halfH} ${halfH} L ${x+5} ${y+5}  A${halfH} ${halfH} 0, ${dir} ,1 ${x2+5} ${y2+5} Z`;
 		path.setAttribute('d', d1);
 
 		let col = colorMaker(i, arrLen);
 		path.setAttribute('fill', col);
-		keyChartGen(col, pieData[count].val, pieData[count].descr)
+		keyChartGen(col, pieData[count].val, pieData[count].descr, partId)
+
+//--------------------------------forhover-------------------------------------->
+
+		let alpha = (totalAng) + (ang0/2);
+		let xprim = 5 * ((Math.sin(alpha * (Math.PI / 180))));
+		let yprim = -5 * ((Math.cos(alpha * (Math.PI / 180))));
+		let keyForThis = document.querySelector('.key-sub[data-id="'+partId+'"]');
+
+		path.addEventListener('mouseenter', (el)=>{
+			el.target.style.transform = `translate(${xprim}px, ${yprim}px)`;
+			keyForThis.classList.add('key-marked');
+		});
+
+		path.addEventListener('mouseleave', (el)=>{
+			el.target.style.transform = `translate(0px, 0px)`;
+			keyForThis.classList.remove('key-marked');
+		});
+
+		//
+		totalAng = totalAng + ang0;
+//<--------------------------------forhover--end--------------------------------------
 
 		x = x2;
 		y = y2;
+		partId ++;
 	};
 };
 /*----------------------------------------------------------------*/
